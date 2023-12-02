@@ -1,11 +1,20 @@
 import "./style.css";
 import {Howl, Howler} from 'howler';
 
+function isMobile(): boolean {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
+  if(isMobile()) {
+    // change font size of button to 60
+    document.querySelector('#imready')!.style.fontSize = '60px';
+  }
+
   // center on screen
   document.querySelector('#imready')!.style.top = window.innerHeight / 2 - 50 + 'px';
   // center, minus the width of the button
-  document.querySelector('#imready')!.style.left = window.innerWidth / 2 - 300 + 'px';  
+  document.querySelector('#imready')!.style.left = window.innerWidth / 2 - (isMobile() ? 100 : 300) + 'px';  
 
   document.querySelector('#imready')!.addEventListener('click', function() {
     start()
