@@ -12,3 +12,8 @@ button {
   box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.2);
   border: 5px solid black;
 }
+
+button:hover {
+  -webkit-transform: scale(1.01);
+  transform: scale(1.01);
+}
