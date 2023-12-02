@@ -5,6 +5,7 @@ html, body {
 }
 
 button {
-  font-size: 160px;
+  font-size: 60px;
   position: absolute;
+  cursor: pointer;
 }
