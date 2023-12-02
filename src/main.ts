@@ -6,6 +6,11 @@ function isMobile(): boolean {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  if(window.location.hash === '#rctv') {
+    start();
+    return;
+  }
+
   if(isMobile()) {
     // change font size of button to 60
     document.querySelector('#imready')!.style.fontSize = '20px';
@@ -13,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // center on screen
   document.querySelector('#imready')!.style.top = window.innerHeight / 2 - 50 + 'px';
-// center, minus the width of the button
+  // center, minus the width of the button
   document.querySelector('#imready')!.style.left = window.innerWidth / 2 - (isMobile() ? 180 : 450) + 'px';
 
   document.querySelector('#imready')!.addEventListener('click', function() {
