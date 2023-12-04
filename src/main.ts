@@ -5,6 +5,13 @@ function isMobile(): boolean {
   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 }
 
+function setCanvasToWindowSize() {
+  const canvas = document.querySelector("canvas")!;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas!.getContext("2d").imageSmoothingEnabled = false;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   if (window.location.hash === "#rctv") {
     start();
@@ -19,11 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "<br/><br/><br/>(Please enable sound.)";
   }
 
-  // make the canvas fit the full window
-  const canvas = document.querySelector("canvas")!;
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  canvas.getContext("2d").imageSmoothingEnabled = false;
+  setCanvasToWindowSize();
 
   // get size of button
   const buttonWidth = document.querySelector("#imready")!.offsetWidth;
@@ -64,6 +67,9 @@ function start(images: HTMLImageElement[] = []) {
   const ctx = canvas.getContext("2d")!;
 
   function slideshowLoop() {
+    // re-reset in case window size changed
+    setCanvasToWindowSize();
+
     index++;
     if (index >= images.length) {
       index = 0;
@@ -82,7 +88,7 @@ function start(images: HTMLImageElement[] = []) {
       window.innerWidth,
       window.innerHeight
     );
-    setTimeout(slideshowLoop, 1875);
+    setTimeout(slideshowLoop, 1881);
   }
   slideshowLoop();
 
