@@ -12,9 +12,30 @@ function setCanvasToWindowSize() {
   canvas!.getContext("2d").imageSmoothingEnabled = false;
 }
 
+function startButtonHandler() {
+  // load all images
+  const images = ["M1.jpeg", "M2.jpeg", "M3.jpeg"];
+  // create new image elements
+  const imageElements = images.map((image) => {
+    return new Promise((resolve) => {
+      const img = document.createElement("img");
+      img.src = `/${image}`;
+      img.onload = () => {
+        resolve(img);
+      };
+    });
+  });
+
+  Promise.all(imageElements).then((images) => {
+    start(images);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  setCanvasToWindowSize();
+
   if (window.location.hash === "#rctv") {
-    start();
+    startButtonHandler();
     return;
   }
 
@@ -25,8 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#imready")!.innerHTML +=
       "<br/><br/><br/>(Please enable sound.)";
   }
-
-  setCanvasToWindowSize();
 
   // get size of button
   const buttonWidth = document.querySelector("#imready")!.offsetWidth;
@@ -39,24 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector("#imready")!.style.left =
     window.innerWidth / 2 - buttonWidth / 2 + "px";
 
-  document.querySelector("#imready")!.addEventListener("click", function () {
-    // load all images
-    const images = ["M1.jpeg", "M2.jpeg", "M3.jpeg"];
-    // create new image elements
-    const imageElements = images.map((image) => {
-      return new Promise((resolve) => {
-        const img = document.createElement("img");
-        img.src = `/${image}`;
-        img.onload = () => {
-          resolve(img);
-        };
-      });
-    });
-
-    Promise.all(imageElements).then((images) => {
-      start(images);
-    });
-  });
+  document
+    .querySelector("#imready")!
+    .addEventListener("click", startButtonHandler);
 });
 
 function start(images: HTMLImageElement[] = []) {
